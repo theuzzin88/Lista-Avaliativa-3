@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char placa[8];
+    char diaSemana[20];
+
+    printf("Digite a placa: ");
+    scanf("%s", placa);
+
+    int placaValida = 1;
+
+    if(strlen(placa) == 7) {
+        if((isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) && isdigit(placa[3]) && isdigit(placa[4]) && isdigit(placa[5]) && isdigit(placa[6]))
+        && (placa[6] != '1' && placa[6] != '0')) {
+            placaValida = 1;
+        } else {
+            placaValida = 0;
+        }
+    } else if(strlen(placa) == 8) {
+        if((isalpha(placa[0]) && isalpha(placa[1]) && isalpha(placa[2]) && isdigit(placa[3]) && isalpha(placa[4]) && isdigit(placa[5]) && isdigit(placa[6]) && isdigit(placa[7]))
+        && (placa[7] != '1' && placa[7] != '0')) {
+            placaValida = 1;
+        } else {
+            placaValida = 0;
+        }
+    } else {
+        placaValida = 0;
+    }
+
+    scanf("%s", diaSemana);
+
+    int diaValido = 1;
+
+    if(strcmp(diaSemana, "SEGUNDA-FEIRA") != 0 && strcmp(diaSemana, "TERCA-FEIRA") != 0 &&
+       strcmp(diaSemana, "QUARTA-FEIRA") != 0 && strcmp(diaSemana, "QUINTA-FEIRA") != 0 &&
+       strcmp(diaSemana, "SEXTA-FEIRA") != 0 && strcmp(diaSemana, "SABADO") != 0 &&
+       strcmp(diaSemana, "DOMINGO") != 0) {
+        diaValido = 0;
+    }
+
+    if (!placaValida) {
+        printf("Placa invalida\n");
+    } else if (!diaValido) {
+        printf("Dia da semana invalido\n");
+    } else {
+
+        int ultimaDigito = placa[strlen(placa) - 1] - '0';
+
+        switch(diaSemana[0]) {
+            case 'S':
+                printf("%s pode circular qualquer dia\n", placa);
+                break;
+            case 'Q':
+                if(ultimaDigito == 4 || ultimaDigito == 5) {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else {
+                    printf("%s pode circular %s\n", placa, diaSemana);
+                }
+                break;
+            
+                break;
+            default:
+                if((ultimaDigito == 0 || ultimaDigito == 1) && diaSemana[0] == 'S') {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else if((ultimaDigito == 2 || ultimaDigito == 3) && diaSemana[0] == 'T') {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else if((ultimaDigito == 4 || ultimaDigito == 5) && diaSemana[0] == 'Q') {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else if((ultimaDigito == 6 || ultimaDigito == 7) && diaSemana[0] == 'Q') {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else if((ultimaDigito == 8 || ultimaDigito == 9) && diaSemana[0] == 'S') {
+                    printf("%s nao pode circular %s\n", placa, diaSemana);
+                } else {
+                    printf("%s pode circular %s\n", placa, diaSemana);
+                }
+        }
+    }
+
+    return 0;
+}
